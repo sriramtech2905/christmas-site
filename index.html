@@ -1,0 +1,318 @@
+]<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Christmas Login with Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#1f6f3c 0%,#0b3b1f 45%,#062412 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      color:#fff;
+    }
+
+    /* main wrapper: left profile + right login */
+    .wrapper{
+      width:850px;
+      max-width:96vw;
+      height:420px;
+      display:flex;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 18px 45px rgba(0,0,0,0.55);
+      border:2px solid rgba(255,255,255,0.15);
+      background:rgba(0,0,0,0.35);
+      backdrop-filter:blur(8px);
+      position:relative;
+    }
+
+    /* left profile sidebar */
+    .profile{
+      flex:0 0 35%;
+      background:linear-gradient(180deg,#0e3a24,#135b37);
+      padding:1.5rem 1.2rem;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:space-between;
+      border-right:1px solid rgba(255,255,255,0.18);
+    }
+
+    .avatar{
+      width:110px;
+      height:110px;
+      border-radius:50%;
+      border:4px solid #ffe9a9;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:3rem;
+      box-shadow:0 0 20px rgba(0,0,0,0.6);
+    }
+
+    .p-name{
+      margin-top:.8rem;
+      font-size:1.1rem;
+      font-weight:700;
+      letter-spacing:.03em;
+    }
+    .p-role{
+      font-size:.85rem;
+      color:#cfe9d8;
+      margin-top:.15rem;
+    }
+
+    .p-info{
+      margin-top:1rem;
+      font-size:.82rem;
+      color:#e4ffef;
+      line-height:1.4;
+      text-align:center;
+    }
+
+    .p-footer{
+      font-size:.8rem;
+      color:#cfe9d8;
+      text-align:center;
+    }
+
+    /* right login card */
+    .login{
+      flex:1;
+      background:#fdfdfd;
+      color:#222;
+      padding:2.1rem 2.3rem;
+    }
+
+    .login h1{
+      font-size:1.6rem;
+      color:#b3262d;
+      text-align:center;
+      margin-bottom:.2rem;
+    }
+    .login .small-line{
+      font-size:.78rem;
+      color:#3c8050;
+      text-align:center;
+      margin-bottom:1.4rem;
+    }
+
+    .field{
+      margin-bottom:.9rem;
+    }
+    .field label{
+      display:block;
+      font-size:.9rem;
+      margin-bottom:.25rem;
+      font-weight:600;
+      color:#2f3b4a;
+    }
+    .field input{
+      width:100%;
+      padding:.5rem .6rem;
+      border-radius:6px;
+      border:1px solid #b6d6be;
+      outline:none;
+      font-size:.9rem;
+    }
+    .field input:focus{
+      border-color:#1e7a3b;
+      box-shadow:0 0 0 2px rgba(30,122,59,0.2);
+    }
+
+    .btn{
+      margin-top:1.2rem;
+      width:100%;
+      padding:.7rem;
+      border:none;
+      border-radius:8px;
+      background:#b3262d;
+      color:#fff;
+      font-weight:600;
+      font-size:.95rem;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+      transition:transform .15s,box-shadow .15s;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 22px rgba(0,0,0,0.35);
+    }
+
+    .emoji-row{
+      text-align:center;
+      margin-top:.7rem;
+      font-size:1.4rem;
+    }
+    .admin-note{
+      margin-top:.4rem;
+      font-size:.8rem;
+      text-align:center;
+      color:#60708b;
+    }
+    .admin-note span{color:#1e7a3b;font-weight:600;}
+
+    /* simple snowflakes */
+    .snowflake{
+      position:fixed;
+      width:10px;height:10px;
+      border-radius:50%;
+      border:2px solid #f5f5f5;
+      opacity:.9;
+      animation:fall 12s linear infinite;
+      z-index:-1;
+    }
+    .snowflake:nth-child(1){left:8%;animation-delay:0s;}
+    .snowflake:nth-child(2){left:28%;animation-delay:2s;}
+    .snowflake:nth-child(3){left:52%;animation-delay:4s;}
+    .snowflake:nth-child(4){left:72%;animation-delay:1s;}
+    .snowflake:nth-child(5){left:90%;animation-delay:3s;}
+    .nav{
+  position:fixed;
+  top:12px;
+  right:18px;
+  background:rgba(8,40,20,0.9);
+  border-radius:999px;
+  padding:0.35rem 1rem;
+  display:flex;
+  align-items:center;
+  gap:0.8rem;
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:0 4px 14px rgba(0,0,0,0.45);
+  z-index:20;
+}
+
+.nav-logo{
+  font-size:0.9rem;
+  font-weight:700;
+  color:#ffe9a9;
+}
+
+.nav a{
+  font-size:0.82rem;
+  color:#e5f9ee;
+  text-decoration:none;
+  padding:0.18rem 0.55rem;
+  border-radius:999px;
+  transition:background 0.15s,color 0.15s;
+}
+
+.nav a:hover{
+  background:#b3262d;
+  color:#fff;
+}
+
+
+    @keyframes fall{
+      0%{top:-10%;}
+      100%{top:110%;}
+    }
+
+    @media (max-width:750px){
+      .wrapper{flex-direction:column;height:auto;}
+      .profile{flex-basis:auto;border-right:none;border-bottom:1px solid rgba(255,255,255,0.18);}
+      .login{padding:1.6rem 1.4rem;}
+    }
+  </style>
+</head>
+<body>
+  <!-- corner navigation -->
+  <nav class="nav">
+    <div class="nav-logo">🎄 X‑mas</div>
+    <a href="admin.html">Admin Login</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <!-- background snow -->
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+  <div class="snowflake"></div>
+
+  <div class="wrapper">
+    <!-- LEFT PROFILE SECTION -->
+    <section class="profile">
+      <div>
+        <div class="avatar">🎅</div>
+        <div class="p-name">Sriram</div>
+        <div class="p-role">Christmas Admin</div>
+        <p class="p-info">
+          Managing gifts, greetings, and all Christmas wishes for friends and family.
+        </p>
+      </div>
+      <div class="p-footer">
+        “Spreading joy one login at a time.”
+      </div>
+    </section>
+
+    <!-- RIGHT LOGIN SECTION -->
+    <section class="login">
+      <h1>Christmas Login</h1>
+      <div class="small-line">Ho Ho Ho! Welcome to the North Pole</div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="admin@christmas.com" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter password" required>
+        </div>
+
+        <div class="emoji-row">🎄 🎁 ⛄</div>
+
+        <button type="submit" class="btn">Login to Christmas</button>
+        <div class="admin-note">
+          Admin check: <span>special email & password</span>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+  const ADMIN_EMAIL = "sriramtech@gmail.com";
+  const ADMIN_PASSWORD = "sriram2905";
+
+  function handleLogin(e){
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const isAdmin = (email === ADMIN_EMAIL && password === ADMIN_PASSWORD);
+
+    // --- store customer login in localStorage (except admin) [web:92][web:95]
+    if(!isAdmin){
+      const now = new Date();
+      const time = now.toLocaleString();
+      const entry = { email, time };
+
+      let logs = JSON.parse(localStorage.getItem("customerLogins") || "[]");
+      logs.push(entry);
+      localStorage.setItem("customerLogins", JSON.stringify(logs));
+    }
+
+    if(isAdmin){
+      alert("Admin logged in: " + email);
+      // optional: window.location.href = "admin-dashboard.html";
+    }else{
+      alert("User logged in: " + email);
+    }
+
+    // after login go to normal greetings page
+    window.location.href = "greetings.html";
+  }
+
+  </script>
+</body>
+</html>
