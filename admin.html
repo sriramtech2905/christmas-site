@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - Christmas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      height:100vh;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#243b53 0%,#0b1020 60%,#020308 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
+
+    .nav{
+      position:fixed;top:12px;right:18px;
+      background:rgba(8,20,40,0.9);
+      border-radius:999px;
+      padding:0.35rem 1rem;
+      display:flex;align-items:center;gap:0.8rem;
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:0 4px 14px rgba(0,0,0,0.45);
+    }
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#ffe9a9;}
+    .nav a{
+      font-size:0.82rem;color:#e5f9ee;text-decoration:none;
+      padding:0.18rem 0.55rem;border-radius:999px;
+      transition:background .15s,color .15s;
+    }
+    .nav a:hover{background:#b3262d;color:#fff;}
+
+    .card{
+      width:340px;max-width:95vw;
+      background:#fdfdfd;color:#222;
+      border-radius:16px;
+      padding:2rem 2.1rem 1.8rem;
+      box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    }
+    h1{
+      text-align:center;
+      font-size:1.5rem;
+      color:#b3262d;
+      margin-bottom:.2rem;
+    }
+    .small-line{
+      text-align:center;
+      font-size:.8rem;
+      color:#3b82f6;
+      margin-bottom:1.3rem;
+    }
+    label{
+      display:block;
+      font-size:.9rem;
+      margin:.5rem 0 .25rem;
+      font-weight:600;
+    }
+    input{
+      width:100%;padding:.5rem .6rem;
+      border-radius:6px;border:1px solid #cbd5e1;
+      font-size:.9rem;outline:none;
+    }
+    input:focus{
+      border-color:#2563eb;
+      box-shadow:0 0 0 2px rgba(37,99,235,0.2);
+    }
+    .btn{
+      margin-top:1.1rem;
+      width:100%;padding:.65rem;
+      border:none;border-radius:8px;
+      background:#b3262d;color:#fff;
+      font-weight:600;font-size:.95rem;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    }
+    .btn:hover{transform:translateY(-1px);}
+    .error{
+      margin-top:.6rem;
+      font-size:.8rem;
+      color:#dc2626;
+      text-align:center;
+      min-height:18px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">🎄 X‑mas</div>
+    <a href="admin.html">Admin Login</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <div class="card">
+    <h1>Admin Login</h1>
+    <div class="small-line">Enter admin email & password</div>
+
+    <form onsubmit="adminLogin(event)">
+      <label for="adminEmail">Email</label>
+      <input id="adminEmail" type="email" required>
+
+      <label for="adminPass">Password</label>
+      <input id="adminPass" type="password" required>
+
+      <button class="btn" type="submit">Login as Admin</button>
+      <div id="error" class="error"></div>
+    </form>
+  </div>
+
+  <script>
+    // must match the ones in login.html [web:97]
+    const ADMIN_EMAIL = "sriramtech@gmail.com";
+    const ADMIN_PASSWORD = "sriram2905";
+
+    function adminLogin(e){
+      e.preventDefault();
+      const email = document.getElementById("adminEmail").value.trim();
+      const pass = document.getElementById("adminPass").value.trim();
+      const errorBox = document.getElementById("error");
+
+      if(email === ADMIN_EMAIL && pass === ADMIN_PASSWORD){
+        errorBox.textContent = "";
+        // mark admin as logged in and go to dashboard
+        sessionStorage.setItem("isAdmin", "true");
+        window.location.href = "admin-dashboard.html";
+      }else{
+        errorBox.textContent = "Invalid admin email or password.";
+      }
+    }
+  </script>
+</body>
+</html>

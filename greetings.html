@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Merry Christmas - Sriram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:linear-gradient(120deg,#f9fafb 0%,#e0f4ff 40%,#c2e5ff 100%);
+      overflow:hidden;
+      color:#111827;
+    }
+
+    .nav{
+      position:fixed;
+      top:12px;
+      right:18px;
+      background:rgba(15,23,42,0.9);
+      border-radius:999px;
+      padding:0.35rem 1rem;
+      display:flex;
+      align-items:center;
+      gap:0.8rem;
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:0 4px 14px rgba(0,0,0,0.35);
+      z-index:20;
+    }
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#ffe9a9;}
+    .nav a{
+      font-size:0.82rem;color:#e5f9ee;text-decoration:none;
+      padding:0.18rem 0.55rem;border-radius:999px;
+      transition:background .15s,color .15s;
+    }
+    .nav a:hover{background:#b3262d;color:#fff;}
+
+    .wrapper{
+      max-width:1100px;
+      margin:0 auto;
+      padding:4.5rem 1rem 2.5rem;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:2rem;
+    }
+
+    /* LEFT TEXT + CARDS */
+    .text-area{
+      flex:0 0 42%;
+    }
+    .title{
+      font-size:clamp(2.2rem,5vw,3rem);
+      color:#111827;
+      margin-bottom:.4rem;
+    }
+    .title span{display:block;}
+    .message{
+      margin-top:.4rem;
+      font-size:.95rem;
+      color:#4b5563;
+      line-height:1.6;
+      max-width:320px;
+    }
+    .btn{
+      margin-top:1.1rem;
+      display:inline-block;
+      padding:.6rem 1.6rem;
+      border-radius:999px;
+      background:#f43f5e;
+      color:#fff;
+      font-size:.9rem;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(244,63,94,0.45);
+    }
+    .byline{
+      margin-top:0.8rem;
+      font-size:.85rem;
+      color:#6b7280;
+    }
+    .byline span{font-weight:600;color:#b3262d;}
+
+    /* greeting cards */
+    .cards{
+      margin-top:1.5rem;
+      display:flex;
+      flex-direction:column;
+      gap:.9rem;
+    }
+    .card{
+      background:#ffffff;
+      border-radius:14px;
+      padding:.8rem .9rem;
+      box-shadow:0 6px 14px rgba(148,163,184,0.5);
+      border-left:4px solid #f97316;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:nth-child(2){border-left-color:#22c55e;}
+    .card:nth-child(3){border-left-color:#3b82f6;}
+    .card-title{
+      font-size:.9rem;
+      font-weight:700;
+      margin-bottom:.2rem;
+      color:#111827;
+    }
+    .card-text{
+      font-size:.86rem;
+      color:#4b5563;
+      line-height:1.5;
+    }
+    .card::after{
+      content:"✨";
+      position:absolute;
+      right:10px;
+      bottom:6px;
+      font-size:1rem;
+      opacity:.7;
+    }
+
+    /* RIGHT ILLUSTRATION (same as before, shortened for space) */
+    .scene{
+      position:relative;
+      flex:0 0 55%;
+      height:340px;
+    }
+    .snow-bg{
+      position:absolute;inset:0;
+      background:linear-gradient(180deg,#dbeafe 0%,#eff6ff 55%,#e5f6ff 100%);
+      border-radius:180px;
+      box-shadow:0 18px 40px rgba(148,163,184,0.7);
+      overflow:hidden;
+    }
+    .snow-hill{
+      position:absolute;bottom:-40px;left:50%;
+      transform:translateX(-50%);
+      width:140%;height:200px;
+      background:#ffffff;border-radius:50%;
+    }
+    .flake{
+      position:absolute;width:8px;height:8px;border-radius:50%;
+      background:#fff;opacity:.9;animation:fall 10s linear infinite;
+    }
+    .flake:nth-child(1){left:20%;animation-delay:0s;}
+    .flake:nth-child(2){left:40%;animation-delay:2s;}
+    .flake:nth-child(3){left:60%;animation-delay:4s;}
+    .flake:nth-child(4){left:80%;animation-delay:1s;}
+    .flake:nth-child(5){left:30%;animation-delay:3s;}
+    @keyframes fall{0%{top:-10%;}100%{top:110%;}}
+
+    .bg-tree{
+      position:absolute;bottom:60px;
+      width:80px;height:140px;background:#9ca3af;
+      clip-path:polygon(50% 0,0 40%,15% 40%,0 70%,20% 70%,0 100%,100% 100%,80% 70%,100% 70%,85% 40%,100% 40%);
+      opacity:.35;
+    }
+    .bg-tree.left{left:12%;}
+    .bg-tree.right{right:8%;height:160px;}
+
+    .tree-wrap{
+      position:absolute;bottom:40px;left:47%;
+      transform:translateX(-50%);
+      width:170px;height:200px;
+    }
+    .tree{
+      position:absolute;bottom:20px;left:50%;
+      transform:translateX(-50%);
+      width:0;height:0;
+      border-left:70px solid transparent;
+      border-right:70px solid transparent;
+      border-bottom:110px solid #1e7440;
+    }
+    .tree::before,
+    .tree::after{
+      content:"";position:absolute;left:50%;transform:translateX(-50%);
+      border-left:60px solid transparent;
+      border-right:60px solid transparent;
+      border-bottom:100px solid #259f55;
+    }
+    .tree::before{top:-60px;}
+    .tree::after{
+      top:-115px;border-left-width:50px;border-right-width:50px;
+      border-bottom-width:80px;border-bottom-color:#2bbf62;
+    }
+    .garland{
+      position:absolute;bottom:55px;left:18px;
+      width:120px;height:70px;border-radius:50%;
+      border-bottom:6px solid #facc15;
+    }
+    .garland::before{
+      content:"";position:absolute;top:-26px;left:6px;
+      width:110px;height:60px;border-radius:50%;
+      border-bottom:6px solid #facc15;
+    }
+    .ornament{position:absolute;width:10px;height:10px;border-radius:50%;background:#ef4444;}
+    .orn1{bottom:74px;left:38px;}
+    .orn2{bottom:60px;right:46px;background:#f97316;}
+    .orn3{bottom:46px;left:72px;background:#10b981;}
+    .orn4{bottom:30px;right:60px;background:#3b82f6;}
+    .star{
+      position:absolute;top:-18px;left:50%;
+      transform:translateX(-50%);font-size:1.6rem;color:#facc15;
+      text-shadow:0 0 10px #facc15;animation:star 1.6s ease-in-out infinite alternate;
+    }
+    @keyframes star{0%{transform:translateX(-50%) scale(1);}100%{transform:translateX(-50%) scale(1.2);}}
+    .trunk{
+      position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+      width:32px;height:32px;background:#7c2d12;border-radius:0 0 8px 8px;
+    }
+    .present{
+      position:absolute;bottom:4px;width:32px;height:30px;
+      border-radius:6px;background:#f97316;
+    }
+    .present.left{left:18%;}
+    .present.right{right:10%;background:#f43f5e;}
+    .present::before{
+      content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
+      width:6px;height:30px;background:rgba(255,255,255,0.8);
+    }
+    .present::after{
+      content:"";position:absolute;top:10px;left:0;
+      width:100%;height:7px;background:rgba(255,255,255,0.8);
+    }
+
+    .santa{
+      position:absolute;bottom:34px;left:12%;width:70px;height:120px;
+    }
+    .santa-body{
+      position:absolute;bottom:25px;left:10px;
+      width:50px;height:45px;background:#ef4444;
+      border-radius:10px 10px 16px 16px;
+    }
+    .santa-head{
+      position:absolute;bottom:65px;left:20px;
+      width:26px;height:26px;background:#fed7aa;border-radius:50%;
+    }
+    .santa-beard{
+      position:absolute;bottom:57px;left:22px;
+      width:22px;height:20px;background:#fff;border-radius:0 0 18px 18px;
+    }
+    .santa-hat{
+      position:absolute;bottom:87px;left:16px;
+      width:0;height:0;border-left:16px solid transparent;
+      border-right:16px solid transparent;border-bottom:24px solid #ef4444;
+      transform:translateX(6px);
+    }
+    .santa-hat::after{
+      content:"";position:absolute;bottom:-26px;left:-14px;
+      width:30px;height:6px;background:#fff;border-radius:4px;
+    }
+    .santa-hat::before{
+      content:"";position:absolute;top:-3px;right:-4px;
+      width:9px;height:9px;background:#fff;border-radius:50%;
+    }
+    .santa-feet{
+      position:absolute;bottom:18px;left:16px;
+      width:40px;height:8px;background:#111827;border-radius:4px;
+    }
+
+    .snowman{
+      position:absolute;bottom:32px;right:10%;width:70px;height:110px;
+    }
+    .snow-body{
+      position:absolute;bottom:20px;left:8px;
+      width:52px;height:50px;background:#fff;border-radius:50%;
+    }
+    .snow-head{
+      position:absolute;bottom:64px;left:18px;
+      width:30px;height:30px;background:#fff;border-radius:50%;
+    }
+    .snow-eye{
+      position:absolute;top:8px;width:4px;height:4px;
+      background:#111827;border-radius:50%;
+    }
+    .snow-eye.left{left:7px;}
+    .snow-eye.right{right:7px;}
+    .snow-nose{
+      position:absolute;top:14px;left:15px;
+      width:12px;height:4px;background:#f97316;border-radius:50px;
+    }
+    .snow-hat{
+      position:absolute;bottom:92px;left:20px;
+      width:28px;height:6px;background:#111827;border-radius:4px;
+    }
+    .snow-hat::before{
+      content:"";position:absolute;bottom:6px;left:5px;
+      width:18px;height:16px;background:#111827;border-radius:2px 2px 0 0;
+    }
+    .snow-scarf{
+      position:absolute;bottom:60px;left:16px;
+      width:32px;height:8px;background:#22c55e;border-radius:6px;
+    }
+
+    @media(max-width:800px){
+      body{overflow:auto;}
+      .wrapper{flex-direction:column;text-align:center;align-items:center;}
+      .text-area{flex:none;}
+      .scene{flex:none;width:100%;max-width:480px;}
+      .message,.cards{text-align:left;margin-inline:auto;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">🎄 X‑mas</div>
+    <a href="admin.html">Admin Login</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <div class="wrapper">
+    <!-- LEFT: text + 3 greeting cards -->
+    <section class="text-area">
+      <h1 class="title">
+        <span>Merry</span>
+        <span>Christmas</span>
+      </h1>
+      <p class="message">
+        May this season fill your heart with peace, your home with warmth,
+        and your days with moments you will always remember.
+      </p>
+      <button class="btn" onclick="alert('Merry Christmas from Sriram!')">
+        READ MORE
+      </button>
+      <p class="byline">By greeting <span>Sriram</span></p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">Joyful Moments</div>
+          <p class="card-text">
+            Wishing you nights full of glittering lights and
+            mornings filled with happy smiles and sweet surprises.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Peace & Love</div>
+          <p class="card-text">
+            May kindness wrap around you like a warm blanket, and may
+            every heartbeat carry peace, love, and gentle hope.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">New Beginnings</div>
+          <p class="card-text">
+            As the year ends, may new doors open with opportunities,
+            success, and beautiful adventures waiting just for you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: illustration -->
+    <section class="scene">
+      <div class="snow-bg">
+        <div class="flake"></div><div class="flake"></div>
+        <div class="flake"></div><div class="flake"></div><div class="flake"></div>
+
+        <div class="bg-tree left"></div>
+        <div class="bg-tree right"></div>
+        <div class="snow-hill"></div>
+
+        <div class="santa">
+          <div class="santa-body"></div>
+          <div class="santa-head"></div>
+          <div class="santa-beard"></div>
+          <div class="santa-hat"></div>
+          <div class="santa-feet"></div>
+        </div>
+
+        <div class="tree-wrap">
+          <div class="tree">
+            <div class="garland"></div>
+            <div class="ornament orn1"></div>
+            <div class="ornament orn2"></div>
+            <div class="ornament orn3"></div>
+            <div class="ornament orn4"></div>
+          </div>
+          <div class="star">★</div>
+          <div class="trunk"></div>
+          <div class="present left"></div>
+          <div class="present right"></div>
+        </div>
+
+        <div class="snowman">
+          <div class="snow-body"></div>
+          <div class="snow-head">
+            <div class="snow-eye left"></div>
+            <div class="snow-eye right"></div>
+            <div class="snow-nose"></div>
+          </div>
+          <div class="snow-hat"></div>
+          <div class="snow-scarf"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

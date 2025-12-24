@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Logins</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#0f172a 0%,#020617 60%,#000 100%);
+      color:#e5e7eb;
+      padding:1.2rem;
+    }
+
+    .nav{
+      position:fixed;top:12px;right:18px;
+      background:rgba(15,23,42,0.95);
+      border-radius:999px;
+      padding:0.35rem 1rem;
+      display:flex;align-items:center;gap:0.8rem;
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:0 4px 14px rgba(0,0,0,0.45);
+    }
+    .nav-logo{font-size:0.9rem;font-weight:700;color:#ffe9a9;}
+    .nav a{
+      font-size:0.82rem;color:#e5f9ee;text-decoration:none;
+      padding:0.18rem 0.55rem;border-radius:999px;
+      transition:background .15s,color .15s;
+    }
+    .nav a:hover{background:#b3262d;color:#fff;}
+
+    h1{
+      margin-top:3rem;
+      margin-bottom:0.3rem;
+      font-size:1.7rem;
+    }
+    .subtitle{
+      font-size:.9rem;
+      color:#9ca3af;
+      margin-bottom:1rem;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:1rem;
+      background:rgba(15,23,42,0.9);
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,0.6);
+    }
+    thead{
+      background:rgba(30,64,175,0.9);
+    }
+    th,td{
+      padding:0.7rem 0.9rem;
+      font-size:.88rem;
+      text-align:left;
+    }
+    th{
+      font-weight:600;
+      color:#e5e7eb;
+    }
+    tbody tr:nth-child(even){
+      background:rgba(15,23,42,0.9);
+    }
+    tbody tr:nth-child(odd){
+      background:rgba(17,24,39,0.9);
+    }
+    .empty{
+      margin-top:1rem;
+      font-size:.9rem;
+      color:#9ca3af;
+    }
+    .logout{
+      margin-top:1.2rem;
+      font-size:.85rem;
+      color:#f97373;
+      cursor:pointer;
+      text-decoration:underline;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">🎄 X‑mas</div>
+    <a href="index.html">Home</a>
+    <a href="admin.html">Admin Login</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <h1>Customer Login Details</h1>
+  <div class="subtitle">Only visible to admin (from localStorage)</div>
+
+  <div id="tableContainer"></div>
+  <div class="logout" onclick="logout()">Logout admin</div>
+
+  <script>
+    // protect page: only open if admin logged in via admin.html [web:93]
+    if(sessionStorage.getItem("isAdmin") !== "true"){
+      alert("Admin access only. Please login as admin.");
+      window.location.href = "admin.html";
+    }
+
+    function renderTable(){
+      const container = document.getElementById("tableContainer");
+      const logs = JSON.parse(localStorage.getItem("customerLogins") || "[]");
+
+      if(logs.length === 0){
+        container.innerHTML = '<div class="empty">No customer logins recorded yet.</div>';
+        return;
+      }
+
+      let rows = logs.map((log, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${log.email}</td>
+          <td>${log.time}</td>
+        </tr>
+      `).join("");
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Customer Email</th>
+              <th>Login Time</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function logout(){
+      sessionStorage.removeItem("isAdmin");
+      window.location.href = "admin.html";
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
